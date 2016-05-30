@@ -302,6 +302,33 @@ public final class StdOut {
         out.printf(locale, format, args);
         out.flush();
     }
+    
+    public static void printf(final int x, final int y) {
+    	if (x > 0) {
+    		if (y > 0) {
+    			out.print("↘");
+    		} else if (y == 0) {
+    			out.print("→");
+    		} else if (y < 0) {
+    			out.print("↗");
+    		}
+    	} else if (x == 0) {
+    		if (y > 0) {
+    			out.print("↓");
+    		} else if (y < 0) {
+    			out.print("↑");
+    		}
+    	} else if (x < 0) {
+    		if (y > 0) {
+    			out.print("↙");
+    		} else if (y == 0) {
+    			out.print("←");
+    		} else if (y < 0) {
+    			out.print("↖");
+    		}
+    	}
+    	out.flush();
+    }
 
    /**
      * Unit tests some of the methods in <tt>StdOut</tt>.
@@ -313,6 +340,7 @@ public final class StdOut {
         StdOut.println(17);
         StdOut.println(true);
         StdOut.printf("%.6f\n", 1.0/7.0);
+        
     }
 
 }

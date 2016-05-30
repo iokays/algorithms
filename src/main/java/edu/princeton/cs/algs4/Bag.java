@@ -135,7 +135,7 @@ public class Bag<Item> implements Iterable<Item> {
      */
     public static void main(String[] args) {
         Bag<String> bag = new Bag<String>();
-        while (!StdIn.isEmpty()) {
+        while (!StdIn.isEmpty()) {	//ctrl+z 终止符
             String item = StdIn.readString();
             bag.add(item);
         }
