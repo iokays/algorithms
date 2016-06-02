@@ -400,7 +400,7 @@ public class GraphGenerator {
     }
     
     /**
-     * 创建一个带权无向联通图.
+     * 创建一个带权无向联通图[节点与节点只有一条边].
      * @param V 节点数
      * @return
      */
@@ -408,23 +408,36 @@ public class GraphGenerator {
         if ((V-1) > E)            throw new IllegalArgumentException("Too few edges");
     	EdgeWeightedGraph G = new EdgeWeightedGraph(V);
         int[] vertices = new int[V];
+        SET<Integer>[] set = new SET[V];
         for (int i = 0; i < V; i++) {
         	vertices[i] = i;
+        	set[i] = new SET<Integer>();
         }
+        
+        
         
         StdRandom.shuffle(vertices);
         for (int i = 0; i < V-1; i++) {
         	double weight = Math.round(100 * StdRandom.uniform()) / 100.0;
         	edu.princeton.cs.algs4.Edge edge = new edu.princeton.cs.algs4.Edge(vertices[i], vertices[i+1], weight);
+        	set[vertices[i]].add(vertices[i+1]);
+        	set[vertices[i + 1]].add(vertices[i]);
         	G.addEdge(edge);
         }
+        
+        
         
         while (G.E() < E) {
         	int v = StdRandom.uniform(V);
             int w = StdRandom.uniform(V);
             double weight = Math.round(100 * StdRandom.uniform()) / 100.0;
-            edu.princeton.cs.algs4.Edge edge = new edu.princeton.cs.algs4.Edge(vertices[v], vertices[w], weight);
-            G.addEdge(edge);
+            if (v != w && !set[vertices[v]].contains(vertices[w])) {
+            	edu.princeton.cs.algs4.Edge edge = new edu.princeton.cs.algs4.Edge(vertices[v], vertices[w], weight);
+            	G.addEdge(edge);
+            	set[vertices[v]].add(vertices[w]);
+            	set[vertices[w]].add(vertices[v]);
+            }
+            
         }
         
         return G;
